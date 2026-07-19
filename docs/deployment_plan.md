@@ -32,11 +32,10 @@ Streamlit Cloud exposes only one public port (usually 8501) for the Streamlit ap
 
 If you wish to preserve the current FastAPI + SQLite architecture, you must deploy the frontend and backend to separate hosting providers.
 
-### 1. Backend Deployment (Render / Railway / Heroku)
-- **Host:** Render Web Service (Free Tier available) or Railway.
-- **Environment Variables:** Set `DATABASE_URL` (use PostgreSQL instead of SQLite if you want persistent storage across deploys, as Render free tier has ephemeral disks).
-- **Start Command:** `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
-- **Result:** You will get a public URL like `https://vault-backend.onrender.com`.
+### 1. Backend Deployment (Railway)
+- **Host:** Railway.
+- **Environment Variables:** Set `DATABASE_URL` (use PostgreSQL instead of SQLite if you want persistent storage across deploys, as Railway containers have ephemeral disks unless a volume is attached).
+- **Result:** You will get a public URL like `https://vault-backend.up.railway.app`.
 
 ### 2. Frontend Deployment (Streamlit Community Cloud)
 - **Host:** Streamlit Community Cloud.
@@ -45,7 +44,7 @@ If you wish to preserve the current FastAPI + SQLite architecture, you must depl
   import os
   API_BASE_URL = os.getenv("API_BASE_URL", "http://localhost:8000/api")
   ```
-- **Configuration:** In your Streamlit Cloud dashboard, set the Secret `API_BASE_URL` to `https://vault-backend.onrender.com/api`.
+- **Configuration:** In your Streamlit Cloud dashboard, set the Secret `API_BASE_URL` to your Railway backend URL (e.g. `https://vault-backend.up.railway.app/api`).
 - **Result:** You will get a public URL like `https://vault-vignette.streamlit.app`.
 
 **Pros:** Preserves existing architecture; backend can scale independently; can handle heavier ML loads without blocking the UI.
@@ -56,6 +55,6 @@ If you wish to preserve the current FastAPI + SQLite architecture, you must depl
 ## Next Steps
 
 **Decision Point:** 
-Do you want to refactor the code to merge FastAPI into Streamlit (Option 1) for a single Streamlit deployment, or do you want to keep them separate and deploy the backend to a service like Render (Option 2)?
+Do you want to refactor the code to merge FastAPI into Streamlit (Option 1) for a single Streamlit deployment, or do you want to keep them separate and deploy the backend to a service like Railway (Option 2)?
 
 Once decided, we can proceed with updating the codebase to support the chosen deployment strategy.
