@@ -1,0 +1,237 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Richie Bank Statement - Privacy &amp; Security</title>
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config injected from instructions -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "background": "#fff8f5",
+                    "primary": "#735c00",
+                    "on-error-container": "#93000a",
+                    "error-container": "#ffdad6",
+                    "on-tertiary": "#ffffff",
+                    "on-surface": "#291806",
+                    "ink-black": "#1A1A1A",
+                    "on-primary": "#ffffff",
+                    "tertiary": "#5e604d",
+                    "inheritance-red": "#C41E3A",
+                    "primary-fixed": "#ffe088",
+                    "primary-container": "#d4af37",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-fixed-dim": "#e9c349",
+                    "on-primary-fixed": "#241a00",
+                    "on-primary-container": "#554300",
+                    "on-secondary-fixed": "#002105",
+                    "surface-variant": "#fedcbe",
+                    "on-tertiary-container": "#454634",
+                    "on-secondary-fixed-variant": "#005316",
+                    "surface-container-low": "#fff1e7",
+                    "coin-gold": "#D4AF37",
+                    "tertiary-container": "#b4b49d",
+                    "secondary-container": "#90f691",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed-dim": "#c8c8b0",
+                    "surface": "#fff8f5",
+                    "tertiary-fixed": "#e4e4cc",
+                    "mint-green": "#98FF98",
+                    "on-error": "#ffffff",
+                    "surface-container-highest": "#fedcbe",
+                    "surface-container": "#ffeada",
+                    "secondary-fixed": "#93f993",
+                    "inverse-primary": "#e9c349",
+                    "on-surface-variant": "#4d4635",
+                    "inverse-on-surface": "#ffeee0",
+                    "on-primary-fixed-variant": "#574500",
+                    "secondary": "#006e20",
+                    "outline-variant": "#d0c5af",
+                    "surface-bright": "#fff8f5",
+                    "on-secondary-container": "#007322",
+                    "surface-container-high": "#ffe3cc",
+                    "error": "#ba1a1a",
+                    "on-tertiary-fixed": "#1b1d0e",
+                    "on-tertiary-fixed-variant": "#474836",
+                    "secondary-fixed-dim": "#77dc7a",
+                    "surface-dim": "#f6d4b6",
+                    "outline": "#7f7663",
+                    "surface-tint": "#735c00",
+                    "parchment-white": "#FDFBF7",
+                    "on-background": "#291806",
+                    "inverse-surface": "#402c18"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "8px",
+                    "gutter": "24px",
+                    "margin": "32px",
+                    "container-max": "1120px"
+            },
+            "fontFamily": {
+                    "headline-lg": [
+                            "Bricolage Grotesque"
+                    ],
+                    "label-md": [
+                            "JetBrains Mono"
+                    ],
+                    "headline-lg-mobile": [
+                            "Bricolage Grotesque"
+                    ],
+                    "headline-md": [
+                            "Bricolage Grotesque"
+                    ],
+                    "body-lg": [
+                            "Literata"
+                    ],
+                    "headline-sm": [
+                            "Bricolage Grotesque"
+                    ],
+                    "body-md": [
+                            "Literata"
+                    ]
+            },
+            "fontSize": {
+                    "headline-lg": [
+                            "48px",
+                            {
+                                    "lineHeight": "56px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "800"
+                            }
+                    ],
+                    "label-md": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "letterSpacing": "0.05em",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "headline-lg-mobile": [
+                            "36px",
+                            {
+                                    "lineHeight": "44px",
+                                    "fontWeight": "800"
+                            }
+                    ],
+                    "headline-md": [
+                            "32px",
+                            {
+                                    "lineHeight": "40px",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-lg": [
+                            "18px",
+                            {
+                                    "lineHeight": "28px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-sm": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "400"
+                            }
+                    ]
+            }
+    },
+        },
+      }
+    </script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&amp;family=JetBrains+Mono:wght@500&amp;family=Literata:wght@400&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        /* Halftone Pattern utility */
+        .halftone-bg {
+            background-image: radial-gradient(circle, #D4AF37 1px, transparent 1px);
+            background-size: 8px 8px;
+            opacity: 0.15;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen">
+<!-- Top App Bar (Suppressed on this specific focused page as per instructions, but keeping structural framework if needed, opting to suppress for full canvas focus on Privacy) -->
+<!-- Main Content Canvas -->
+<main class="w-full min-h-screen flex items-center justify-center p-gutter relative overflow-hidden">
+<!-- Background Halftone -->
+<div class="absolute inset-0 halftone-bg pointer-events-none z-0"></div>
+<!-- The Vault Door Container (Bento/Card) -->
+<div class="relative z-10 w-full max-w-[900px] bg-surface-container-lowest border-[3px] border-ink-black shadow-[8px_8px_0px_0px_rgba(212,175,55,1)] p-gutter md:p-margin flex flex-col md:flex-row gap-gutter">
+<!-- Left Column: The Character & Theme -->
+<div class="w-full md:w-5/12 flex flex-col items-center justify-center text-center relative p-unit border-[1.5px] border-ink-black bg-surface-variant shadow-[4px_4px_0px_0px_rgba(26,26,26,1)] overflow-hidden">
+<!-- Vault graphic background -->
+<div class="absolute inset-0 opacity-20 flex items-center justify-center">
+<span class="material-symbols-outlined text-[200px]" style="font-variation-settings: 'FILL' 0;">lock</span>
+</div>
+<div class="relative z-10 flex flex-col items-center">
+<img class="w-48 h-48 object-cover rounded-full border-[3px] border-ink-black mb-4 shadow-[4px_4px_0px_0px_rgba(26,26,26,1)] bg-parchment-white" data-alt="A charming, hand-drawn 1950s style comic illustration of a wealthy aristocratic character dressed as a security guard, wearing a monocle and a slightly oversized security cap. He is standing proudly in front of a giant steel bank vault door. The illustration features thick, black inky outlines, flat pastel colors, and a nostalgic, affably affluent aesthetic. Light mode, bright, whimsical." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLZoxrSJAGNXvpnjct-f-Yr3nVkjqlHhehQR9n1gyLXXNnUFC2MHUa3hvde-2xc7uJ4xkKpe1GzWfm-mRTwQMupvous6ifzYgiKOd_B8YZ1b3au-bLiwJHwmN2hdqD2eGFA2DvdaBxqKs0wbkwqFacn5MNp_xlQLkouHfmW6C4SBHfHW3BdL5m8xYFR8UbJ6sliRTbz_v8B-AiCCQbgpD3QQzS5qNmHK7z2W78OF-QZiiSdqm_95FzSakmyy4FoOnKrb6IotgEYSg">
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary leading-tight mb-2">The Vault</h1>
+<p class="font-headline-sm text-headline-sm text-on-surface-variant">Your data never leaves the mansion!</p>
+</div>
+</div>
+<!-- Right Column: The Details (Bento items) -->
+<div class="w-full md:w-7/12 flex flex-col gap-unit">
+<div class="mb-4">
+<h2 class="font-headline-md text-headline-md text-ink-black mb-2">Privacy &amp; Security</h2>
+<p class="font-body-lg text-body-lg text-on-surface">We treat your financial bank statements with the utmost discretion. Here at the estate, everything is handled strictly in-house.</p>
+</div>
+<!-- Grid of Features -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-unit">
+<!-- Feature 1 -->
+<div class="bg-surface border-[1.5px] border-ink-black p-4 flex flex-col gap-2 shadow-[2px_2px_0px_0px_rgba(212,175,55,1)] hover:bg-surface-container-high transition-colors">
+<div class="w-10 h-10 bg-primary-container border-[1.5px] border-ink-black rounded-full flex items-center justify-center text-on-primary-container shadow-[2px_2px_0px_0px_rgba(26,26,26,1)]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">memory</span>
+</div>
+<h3 class="font-label-md text-label-md uppercase text-ink-black">Local ML</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">All intelligence processing happens right here on your own device. No sending numbers to strangers.</p>
+</div>
+<!-- Feature 2 -->
+<div class="bg-surface border-[1.5px] border-ink-black p-4 flex flex-col gap-2 shadow-[2px_2px_0px_0px_rgba(212,175,55,1)] hover:bg-surface-container-high transition-colors">
+<div class="w-10 h-10 bg-primary-container border-[1.5px] border-ink-black rounded-full flex items-center justify-center text-on-primary-container shadow-[2px_2px_0px_0px_rgba(26,26,26,1)]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">cloud_off</span>
+</div>
+<h3 class="font-label-md text-label-md uppercase text-ink-black">No Cloud</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Your bank statements are never uploaded to 'the cloud'. The sky is for birds, not your bank statements.</p>
+</div>
+<!-- Feature 3 -->
+<div class="bg-surface border-[1.5px] border-ink-black p-4 flex flex-col gap-2 shadow-[2px_2px_0px_0px_rgba(212,175,55,1)] hover:bg-surface-container-high transition-colors sm:col-span-2">
+<div class="w-10 h-10 bg-primary-container border-[1.5px] border-ink-black rounded-full flex items-center justify-center text-on-primary-container shadow-[2px_2px_0px_0px_rgba(26,26,26,1)]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">speed</span>
+</div>
+<h3 class="font-label-md text-label-md uppercase text-ink-black">Zero Friction</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Because everything is local, analyzing your wealth is instantaneous. No waiting for servers to reply.</p>
+</div>
+</div>
+<!-- Action / Back -->
+<div class="mt-auto pt-margin flex justify-end">
+<button class="bg-coin-gold border-[3px] border-ink-black text-ink-black font-label-md text-label-md px-6 py-3 shadow-[4px_4px_0px_0px_rgba(26,26,26,1)] hover:shadow-[2px_2px_0px_0px_rgba(26,26,26,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all flex items-center gap-2" onclick="history.back()"><span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 1;">arrow_back</span> Return to Bank Statement</button>
+</div>
+</div>
+</div>
+</main>
+
+
+
+</body></html>

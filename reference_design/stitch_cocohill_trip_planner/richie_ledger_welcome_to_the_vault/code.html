@@ -1,0 +1,319 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>The Vault Landing Page - Richie Ledger</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "background": "#fff8f5",
+                      "primary": "#735c00",
+                      "on-error-container": "#93000a",
+                      "error-container": "#ffdad6",
+                      "on-tertiary": "#ffffff",
+                      "on-surface": "#291806",
+                      "ink-black": "#1A1A1A",
+                      "on-primary": "#ffffff",
+                      "tertiary": "#5e604d",
+                      "inheritance-red": "#C41E3A",
+                      "primary-fixed": "#ffe088",
+                      "primary-container": "#d4af37",
+                      "surface-container-lowest": "#ffffff",
+                      "primary-fixed-dim": "#e9c349",
+                      "on-primary-fixed": "#241a00",
+                      "on-primary-container": "#554300",
+                      "on-secondary-fixed": "#002105",
+                      "surface-variant": "#fedcbe",
+                      "on-tertiary-container": "#454634",
+                      "on-secondary-fixed-variant": "#005316",
+                      "surface-container-low": "#fff1e7",
+                      "coin-gold": "#D4AF37",
+                      "tertiary-container": "#b4b49d",
+                      "secondary-container": "#90f691",
+                      "on-secondary": "#ffffff",
+                      "tertiary-fixed-dim": "#c8c8b0",
+                      "surface": "#fff8f5",
+                      "tertiary-fixed": "#e4e4cc",
+                      "mint-green": "#98FF98",
+                      "on-error": "#ffffff",
+                      "surface-container-highest": "#fedcbe",
+                      "surface-container": "#ffeada",
+                      "secondary-fixed": "#93f993",
+                      "inverse-primary": "#e9c349",
+                      "on-surface-variant": "#4d4635",
+                      "inverse-on-surface": "#ffeee0",
+                      "on-primary-fixed-variant": "#574500",
+                      "secondary": "#006e20",
+                      "outline-variant": "#d0c5af",
+                      "surface-bright": "#fff8f5",
+                      "on-secondary-container": "#007322",
+                      "surface-container-high": "#ffe3cc",
+                      "error": "#ba1a1a",
+                      "on-tertiary-fixed": "#1b1d0e",
+                      "on-tertiary-fixed-variant": "#474836",
+                      "secondary-fixed-dim": "#77dc7a",
+                      "surface-dim": "#f6d4b6",
+                      "outline": "#7f7663",
+                      "surface-tint": "#735c00",
+                      "parchment-white": "#FDFBF7",
+                      "on-background": "#291806",
+                      "inverse-surface": "#402c18"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "unit": "8px",
+                      "gutter": "24px",
+                      "margin": "32px",
+                      "container-max": "1120px"
+              },
+              "fontFamily": {
+                      "headline-lg": [
+                              "Bricolage Grotesque"
+                      ],
+                      "label-md": [
+                              "JetBrains Mono"
+                      ],
+                      "headline-lg-mobile": [
+                              "Bricolage Grotesque"
+                      ],
+                      "headline-md": [
+                              "Bricolage Grotesque"
+                      ],
+                      "body-lg": [
+                              "Literata"
+                      ],
+                      "headline-sm": [
+                              "Bricolage Grotesque"
+                      ],
+                      "body-md": [
+                              "Literata"
+                      ]
+              },
+              "fontSize": {
+                      "headline-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "36px",
+                              {
+                                      "lineHeight": "44px",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "headline-md": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-sm": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .pattern-dots {
+            background-image: radial-gradient(#1A1A1A 1px, transparent 1px);
+            background-size: 16px 16px;
+            opacity: 0.05;
+        }
+        
+        .comic-panel {
+            position: relative;
+            background: #fff8f5;
+            border: 3px solid #1A1A1A;
+            border-radius: 0.5rem;
+            box-shadow: 6px 6px 0px 0px rgba(212,175,55,1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .comic-panel-hover:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 4px 4px 0px 0px rgba(212,175,55,1);
+        }
+
+        .comic-button {
+            border: 3px solid #1A1A1A;
+            box-shadow: 4px 4px 0px 0px #1A1A1A;
+            transition: all 0.1s ease-in-out;
+        }
+
+        .comic-button:active {
+            transform: translate(4px, 4px);
+            box-shadow: 0px 0px 0px 0px #1A1A1A;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-x-hidden min-h-screen relative pt-[72px]">
+<div class="fixed inset-0 pattern-dots pointer-events-none z-[-1]"></div>
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter py-4 bg-background border-b-4 border-ink-black shadow-[4px_4px_0px_0px_rgba(212,175,55,1)]">
+<div class="flex items-center gap-4">
+<span class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-primary italic dark:text-primary-fixed font-extrabold tracking-tight">Richie Bank Statement</span>
+</div>
+<div class="hidden md:flex items-center gap-8 font-label-md text-label-md">
+<a class="text-primary font-bold border-b-4 border-coin-gold hover:bg-surface-container-high transition-transform hover:-translate-y-1 py-1" href="#">Vault</a>
+<a class="text-on-surface-variant font-medium hover:bg-surface-container-high transition-transform hover:-translate-y-1 py-1" href="#">Bank Statement</a>
+<a class="text-on-surface-variant font-medium hover:bg-surface-container-high transition-transform hover:-translate-y-1 py-1" href="#">Treasury</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-surface-container-high transition-transform hover:-translate-y-1 rounded-full text-primary dark:text-primary-fixed">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high transition-transform hover:-translate-y-1 rounded-full text-primary dark:text-primary-fixed">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high transition-transform hover:-translate-y-1 rounded-full text-primary dark:text-primary-fixed">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="w-10 h-10 rounded-full border-2 border-ink-black overflow-hidden bg-surface-variant">
+<img alt="Wealthy character with monocle" class="w-full h-full object-cover" data-alt="A small, stylized portrait of a wealthy 1950s comic book character with a monocle, top hat, and a smug but friendly smile. The illustration uses thick black ink outlines and a limited pastel color palette of cream, soft yellow, and gold, set against a pale cream background. The character represents high-society prestige with playful charm." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVjVQ3m7PD371HBDApmEsgP1xupwHZNFEAF3FYPtuRnEfOamCKODJJgophdMnBwoM33QGpMbZuEEznpK9MN0GJv5o3exD8E3tnVbXnwxOA-Cp2WsfHCTdh01JK5U23ld9VR7RP52os8uBwgKffh7qIEATWkTXNu-Al-RwhKLKewy9O3lWIFXG4N0OhaV8JWazfd5SfYexcjJxFbtHF7ZIG9CNMj0WWy4ydaEk3xpDAnootMv7p1Lel42_hDk1TRdL7tv04elnBBaY">
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="max-w-container-max mx-auto px-gutter py-margin md:py-16">
+<!-- Hero Section -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-gutter mb-20 relative">
+<div class="md:col-span-7 flex flex-col justify-center z-10">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg mb-6 leading-tight">Deposit Your <span class="text-coin-gold underline decoration-ink-black decoration-4 underline-offset-8">Bank Statement</span> for Analysis</h1>
+<p class="font-body-lg text-body-lg mb-8 max-w-xl text-on-surface-variant">
+                    Welcome to the Vault! Entrust your bank statements to our state-of-the-art analytical engine. We'll untangle your finances with the utmost discretion and a touch of class.
+                </p>
+<div class="flex flex-wrap gap-4">
+<button class="comic-button bg-primary text-on-primary font-label-md text-label-md px-8 py-4 rounded-lg flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="upload_file" data-weight="fill">upload_file</span>
+                        Upload Statement
+                    </button>
+<button class="comic-button bg-surface-variant text-on-surface font-label-md text-label-md px-8 py-4 rounded-lg flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+                        View Sample
+                    </button>
+</div>
+</div>
+<div class="md:col-span-5 relative mt-12 md:mt-0">
+<div class="comic-panel bg-primary-fixed p-6 rounded-xl aspect-square flex flex-col items-center justify-center border-4">
+<img alt="Treasure Chest Illustration" class="w-64 h-64 object-contain mb-4 animate-bounce-slow" data-alt="A large, vintage-style illustration of an open, overflowing treasure chest. The chest is drawn with thick, uneven black ink lines typical of mid-century comics, filled with gold coins, gems, and rolled up financial ledgers. A cartoonish 'Richie Rich' style character in a top hat leans over the chest, holding a magnifying glass. The color palette features pastel yellow, gold, mint green, and pale pink against a dotted background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBt7gawIsxxK-SwycvDZiRQVXL0zMvc68m7eTgFYJ5GI492o9zAmAQFgXZ1F8lsN7cns1loPg1jhBoP-jzldyd1JugCpR5xcapuhOIVDzX9xjmWbxJH18HpGpeY7GMpgp4rJbuu0Q3rY1YyyRfYm2ftDC6cMRs8eFiYcRoBEpwvxTZY8wkhCccw-xFCgsPmJBCCRIjCCaQ26cucZqASA5NpX3HVtdat1yfJBhdoL8dkuyVyJUQJLRsmEGWXd7_2fl4rtdMUhcVoF1g">
+<p class="font-headline-sm text-headline-sm text-center">Drop CSV/Excel Here</p>
+<p class="font-body-md text-body-md text-on-surface-variant text-center mt-2">Maximum file size 50MB</p>
+</div>
+<!-- Decorative overlapping elements -->
+<div class="absolute -bottom-6 -left-6 bg-surface border-3 border-ink-black rounded-full p-3 shadow-[4px_4px_0px_0px_rgba(26,26,26,1)] rotate-[-15deg]">
+<span class="material-symbols-outlined text-coin-gold text-4xl" data-icon="monetization_on" data-weight="fill">monetization_on</span>
+</div>
+<div class="absolute -top-4 -right-4 bg-surface border-3 border-ink-black rounded-full p-3 shadow-[4px_4px_0px_0px_rgba(26,26,26,1)] rotate-[15deg]">
+<span class="material-symbols-outlined text-mint-green text-4xl" data-icon="trending_up" data-weight="fill">trending_up</span>
+</div>
+</div>
+</section>
+<!-- Features Section -->
+<section class="mt-24">
+<h2 class="font-headline-md text-headline-md-mobile md:text-headline-md text-center mb-12">The Vault's Guarantees</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Feature 1 -->
+<div class="comic-panel comic-panel-hover bg-surface-container-low p-6 rounded-lg relative overflow-hidden">
+<div class="absolute top-0 right-0 w-24 h-24 bg-coin-gold opacity-20 rounded-bl-full pointer-events-none"></div>
+<div class="w-12 h-12 bg-mint-green border-2 border-ink-black rounded-lg flex items-center justify-center mb-4 shadow-[2px_2px_0px_0px_rgba(26,26,26,1)]">
+<span class="material-symbols-outlined text-on-surface" data-icon="security">security</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-2">Ironclad Privacy</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Your bank statements are locked tight. We employ bank-level encryption to ensure your financial secrets remain yours alone.</p>
+</div>
+<!-- Feature 2 -->
+<div class="comic-panel comic-panel-hover bg-surface-container-low p-6 rounded-lg relative overflow-hidden">
+<div class="absolute top-0 right-0 w-24 h-24 bg-coin-gold opacity-20 rounded-bl-full pointer-events-none"></div>
+<div class="w-12 h-12 bg-primary-fixed border-2 border-ink-black rounded-lg flex items-center justify-center mb-4 shadow-[2px_2px_0px_0px_rgba(26,26,26,1)]">
+<span class="material-symbols-outlined text-on-surface" data-icon="smart_toy">smart_toy</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-2">Auto-Detection</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Our mechanical marvels instantly categorize your expenses, separating the extravagant galas from the mundane utilities.</p>
+</div>
+<!-- Feature 3 -->
+<div class="comic-panel comic-panel-hover bg-surface-container-low p-6 rounded-lg relative overflow-hidden">
+<div class="absolute top-0 right-0 w-24 h-24 bg-coin-gold opacity-20 rounded-bl-full pointer-events-none"></div>
+<div class="w-12 h-12 bg-surface-variant border-2 border-ink-black rounded-lg flex items-center justify-center mb-4 shadow-[2px_2px_0px_0px_rgba(26,26,26,1)]">
+<span class="material-symbols-outlined text-on-surface" data-icon="lightbulb">lightbulb</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-2">Wealth Insights</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Discover hidden trends in your spending. We'll provide actionable insights to help you grow your personal treasury.</p>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 bg-background border-t-4 border-ink-black rounded-t-xl shadow-[0px_-4px_0px_0px_rgba(212,175,55,1)]">
+<a class="flex flex-col items-center justify-center bg-primary text-on-primary rounded-xl px-4 py-1 border-2 border-ink-black scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="lock">lock</span>
+<span class="font-label-md text-label-md-mobile mt-1">Vault</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span class="font-label-md text-label-md-mobile mt-1">Bank Statement</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary" href="#">
+<span class="material-symbols-outlined" data-icon="card_giftcard">card_giftcard</span>
+<span class="font-label-md text-label-md-mobile mt-1">Treasury</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary" href="#">
+<span class="material-symbols-outlined" data-icon="support_agent">support_agent</span>
+<span class="font-label-md text-label-md-mobile mt-1">Help</span>
+</a>
+</nav>
+<style>
+        @keyframes bounce-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-bounce-slow {
+            animation: bounce-slow 3s infinite ease-in-out;
+        }
+    </style>
+
+
+
+</body></html>

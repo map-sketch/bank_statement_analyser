@@ -1,0 +1,34 @@
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Data & Models
+backend/data/bank_statement.db
+backend/data/uploads/*
+backend/ml_models/*.pkl
+!backend/data/uploads/.gitkeep
+!backend/ml_models/.gitkeep
+*.csv
+*.xls
+*.xlsx
+
+# Personal / Test Data
+*test data*
+*vault_ledger_export*
+combined_training_data.csv
+
+# Node
+node_modules/
+dist/
+build/
+.npm

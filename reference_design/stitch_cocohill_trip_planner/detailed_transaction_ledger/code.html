@@ -1,0 +1,381 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Richie Ledger - Transaction Ledger</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400..700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#fff8f5",
+                        "primary": "#735c00",
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6",
+                        "on-tertiary": "#ffffff",
+                        "on-surface": "#291806",
+                        "ink-black": "#1A1A1A",
+                        "on-primary": "#ffffff",
+                        "tertiary": "#5e604d",
+                        "inheritance-red": "#C41E3A",
+                        "primary-fixed": "#ffe088",
+                        "primary-container": "#d4af37",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed-dim": "#e9c349",
+                        "on-primary-fixed": "#241a00",
+                        "on-primary-container": "#554300",
+                        "on-secondary-fixed": "#002105",
+                        "surface-variant": "#fedcbe",
+                        "on-tertiary-container": "#454634",
+                        "on-secondary-fixed-variant": "#005316",
+                        "surface-container-low": "#fff1e7",
+                        "coin-gold": "#D4AF37",
+                        "tertiary-container": "#b4b49d",
+                        "secondary-container": "#90f691",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed-dim": "#c8c8b0",
+                        "surface": "#fff8f5",
+                        "tertiary-fixed": "#e4e4cc",
+                        "mint-green": "#98FF98",
+                        "on-error": "#ffffff",
+                        "surface-container-highest": "#fedcbe",
+                        "surface-container": "#ffeada",
+                        "secondary-fixed": "#93f993",
+                        "inverse-primary": "#e9c349",
+                        "on-surface-variant": "#4d4635",
+                        "inverse-on-surface": "#ffeee0",
+                        "on-primary-fixed-variant": "#574500",
+                        "secondary": "#006e20",
+                        "outline-variant": "#d0c5af",
+                        "surface-bright": "#fff8f5",
+                        "on-secondary-container": "#007322",
+                        "surface-container-high": "#ffe3cc",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed": "#1b1d0e",
+                        "on-tertiary-fixed-variant": "#474836",
+                        "secondary-fixed-dim": "#77dc7a",
+                        "surface-dim": "#f6d4b6",
+                        "outline": "#7f7663",
+                        "surface-tint": "#735c00",
+                        "parchment-white": "#FDFBF7",
+                        "on-background": "#291806",
+                        "inverse-surface": "#402c18"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "gutter": "24px",
+                        "margin": "32px",
+                        "container-max": "1120px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Bricolage Grotesque"],
+                        "label-md": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Bricolage Grotesque"],
+                        "headline-md": ["Bricolage Grotesque"],
+                        "body-lg": ["Literata"],
+                        "headline-sm": ["Bricolage Grotesque"],
+                        "body-md": ["Literata"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["36px", { "lineHeight": "44px", "fontWeight": "800" }],
+                        "headline-md": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-sm": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    },
+                    "backgroundImage": {
+                        'halftone': 'radial-gradient(circle, #D4AF37 1px, transparent 1.5px)',
+                    },
+                    "backgroundSize": {
+                        'halftone-size': '8px 8px',
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .comic-panel {
+            border: 3px solid #1A1A1A;
+            box-shadow: 6px 6px 0px 0px rgba(212, 175, 55, 1);
+            background-color: #ffffff;
+        }
+        .comic-sub-panel {
+            border: 1.5px solid #1A1A1A;
+            box-shadow: 3px 3px 0px 0px rgba(26, 26, 26, 1);
+        }
+        .ledger-row {
+            border-bottom: 2px solid #1A1A1A;
+            background-color: #FDFBF7; /* parchment-white */
+        }
+        .ledger-row:last-child {
+            border-bottom: none;
+        }
+        .switch-input:checked + .switch-bg {
+            background-color: #98FF98; /* mint-green */
+            border-color: #1A1A1A;
+        }
+        .switch-input:checked + .switch-bg .switch-knob {
+            transform: translateX(1.5rem);
+            background-color: #D4AF37; /* coin-gold */
+            border-color: #1A1A1A;
+        }
+        
+        /* Custom Ledger Table Stripes */
+        .ledger-table tr:nth-child(even) {
+            background-color: #fff1e7; /* surface-container-low */
+        }
+        .ledger-table tr:hover {
+            background-color: #ffe3cc; /* surface-container-high */
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md font-body-md min-h-screen pt-[72px] pb-[72px] md:pb-0 md:pl-64">
+<!-- TOP APP BAR -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter py-4 bg-background border-b-4 border-ink-black shadow-[4px_4px_0px_0px_rgba(212,175,55,1)]">
+<div class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-primary italic font-bold">Richie Bank Statement</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary cursor-pointer hover:bg-surface-container-high transition-transform hover:-translate-y-1 p-2 rounded-full border-2 border-transparent hover:border-ink-black">account_balance_wallet</span>
+<span class="material-symbols-outlined text-primary cursor-pointer hover:bg-surface-container-high transition-transform hover:-translate-y-1 p-2 rounded-full border-2 border-transparent hover:border-ink-black">history</span>
+<span class="material-symbols-outlined text-primary cursor-pointer hover:bg-surface-container-high transition-transform hover:-translate-y-1 p-2 rounded-full border-2 border-transparent hover:border-ink-black">settings</span>
+<div class="w-10 h-10 rounded-full border-2 border-ink-black overflow-hidden bg-coin-gold flex-shrink-0 cursor-pointer">
+<img alt="Wealthy character with monocle" class="w-full h-full object-cover" data-alt="A vintage 1950s comic style illustration of a wealthy cartoon character wearing a top hat and a monocle, smiling broadly against a solid gold background. Thick ink outlines, pastel colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC89bzM4HDmmzPGcTj7YzpOGWnJYRHodkbuTEdC8BUDUmbCYfFVFT0rWhSltg_NqjZNrkpBFBc0H1ySiQ3dpSp8OFkBnzinAACMC2ux2XWgFOTcv5oD5v4ADg5dqqKUa3zPKmcWkGsFfnA4EirfhOhJLRUFVPiQ2oBmV4wqWMhR_Z79LZ3PgGE-3ZCQwEo1mByRJtMoZ_N4J89OW6oesaeMibb2GD8q4V1kM1XpWAUwFG65BWuo3Cqs4FsZW0xSREoL78IUumX9D-4">
+</div>
+</div>
+</header>
+<!-- SIDE NAV BAR (Desktop) -->
+<nav class="hidden md:flex flex-col h-full p-unit bg-surface-container-low fixed left-0 top-[76px] bottom-0 w-64 border-r-4 border-ink-black shadow-[6px_0px_0px_0px_rgba(212,175,55,1)] z-40">
+<div class="flex flex-col items-center p-4 mb-6 border-b-2 border-ink-black">
+<div class="w-16 h-16 rounded-full border-2 border-ink-black overflow-hidden bg-surface-variant mb-2">
+<img alt="Cartoon character in top hat" class="w-full h-full object-cover" data-alt="A small circular comic-style avatar of a 1950s wealthy tycoon with a large mustache and a top hat, surrounded by floating coins on a pastel background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAllKY3JQ0xQGrjZnOPdFITnIdVYwnzwH0UxgZS6Fz4kejnF2izKmIwy3y7Q8oRu0RLIeDR36TpzeUHaEsdohIEEt2UJk2C2y9QZxNqGHaTAwIV-F135x296to0Ov0fVjk8TpRPzEyapm-9XWvNX-9eBaSxlvLbaWeutP-a6n3YKyLpEif_oNYQr120b1FbuX_sbNcPBfv5ZTjPa95Y7HxyYT4Emb0tSIY9kiPcAvcFduOUpO3b0PoZNgZCVqYSbFfttfVnCZmgIoM">
+</div>
+<h2 class="font-headline-sm text-headline-sm text-primary">The Vault</h2>
+<p class="font-label-md text-label-md text-on-surface-variant">Wealth Management</p>
+</div>
+<ul class="flex-1 space-y-2">
+<li class="">
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:text-primary hover:bg-surface-variant hover:translate-x-1 transition-all rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">account_balance</span>
+                    Vault
+                </a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 p-3 bg-primary-container text-on-primary-container border-2 border-ink-black shadow-[3px_3px_0px_0px_rgba(26,26,26,1)] rounded-lg font-label-md text-label-md scale-95 duration-100" href="#"><span class="material-symbols-outlined">assignment</span> Bank Statement</a>
+</li>
+
+
+
+</ul>
+<div class="mt-auto pt-4 border-t-2 border-ink-black">
+
+<ul class="flex justify-around">
+<li class="">
+<a class="flex flex-col items-center gap-1 p-2 text-on-surface-variant hover:text-primary transition-all font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined text-lg">lock</span>
+<span class="text-[10px]">Security</span>
+</a>
+</li>
+<li class="">
+<a class="flex flex-col items-center gap-1 p-2 text-on-surface-variant hover:text-primary transition-all font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined text-lg">help</span>
+<span class="text-[10px]">Support</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- BOTTOM NAV BAR (Mobile) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 bg-background border-t-4 border-ink-black rounded-t-xl shadow-[0px_-4px_0px_0px_rgba(212,175,55,1)]">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary font-label-md text-label-md-mobile" href="#">
+<span class="material-symbols-outlined">lock</span>
+<span class="">Vault</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary text-on-primary rounded-xl px-4 py-1 border-2 border-ink-black scale-90 transition-transform font-label-md text-label-md-mobile" href="#"><span class="material-symbols-outlined">menu_book</span><span class="">Bank Statement</span></a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary font-label-md text-label-md-mobile" href="#">
+<span class="material-symbols-outlined">card_giftcard</span>
+<span class="">Treasury</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary font-label-md text-label-md-mobile" href="#">
+<span class="material-symbols-outlined">support_agent</span>
+<span class="">Help</span>
+</a>
+</nav>
+<!-- MAIN CONTENT CANVAS -->
+<main class="p-gutter max-w-container-max mx-auto">
+<!-- PAGE HEADER -->
+<div class="mb-margin">
+<h1 class="font-headline-md text-headline-md-mobile md:text-headline-md text-on-surface mb-2">The Bank Statement</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">A meticulous record of your most recent financial capers and acquisitions.</p>
+</div>
+<!-- SALARY AUTO-DETECTION BANNER -->
+<div class="comic-panel rounded-xl mb-margin relative overflow-hidden bg-mint-green bg-halftone bg-halftone-size">
+<div class="absolute inset-0 bg-white/40"></div> <!-- subtle overlay to soften halftone -->
+<div class="relative z-10 p-6 flex items-center justify-between">
+<div class="max-w-md">
+<h2 class="font-headline-sm text-headline-sm text-ink-black mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">celebration</span>
+                        Salary Detected!
+                    </h2>
+<p class="font-body-md text-body-md text-on-secondary-fixed-variant">
+                        By jove! A massive deposit of <strong class="text-ink-black">$12,500.00</strong> from "Goliath National Bank" has cleared. 
+                        Your vault is looking quite plump indeed.
+                    </p>
+</div>
+<!-- Character Cameo -->
+<div class="w-32 h-32 hidden sm:block absolute right-6 bottom-0 translate-y-4">
+<img alt="Character with money bag" class="w-full h-full object-contain" data-alt="A classic comic book style drawing of an opulent gentleman holding a giant canvas bag with a dollar sign on it, smiling greedily. Thick ink outlines, flat vibrant mint green and gold colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUtszaTazVUvUg1ALkhcmO3-o_4Vvzs-LxCsb-qDPaB55PVqxnFRI8ZKLjiM-FZI61K8U7R1EyGE4mtbqysFPpZAoeQ3_RpRB-BMwlW0mN5JNTLSk57pBAidzgiRB9MZa_krzuIdcZL94dDSUlHmXedZuk8hWD9om5nNdK7omrIFgSUFjtwBodWqTISo5kP_WRapYwE5Z640zlMn_-KFz_R4O4gO6HEUtq4ViwL06ZV4PsUioV_PgJHtRxE7IxsE9z9vfdXYzxmh4">
+</div>
+</div>
+</div>
+<!-- THE TRANSACTION LEDGER -->
+<div class="comic-panel rounded-xl bg-parchment-white overflow-hidden">
+<!-- Ledger Header -->
+<div class="bg-surface-variant p-4 border-b-3 border-ink-black flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined">menu_book</span>
+                    Recent Entries
+                </h3>
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase">Sort:</span>
+<button class="comic-sub-panel px-3 py-1 bg-white rounded font-label-md text-label-md text-on-surface flex items-center gap-1 hover:bg-surface-container-low">
+                        Date <span class="material-symbols-outlined text-sm">arrow_drop_down</span>
+</button>
+</div>
+</div>
+<!-- Table Container -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse ledger-table min-w-[700px]">
+<thead>
+<tr class="border-b-3 border-ink-black bg-surface-container">
+<th class="p-4 font-label-md text-label-md text-on-surface uppercase tracking-wider w-1/5">Date</th>
+<th class="p-4 font-label-md text-label-md text-on-surface uppercase tracking-wider w-2/5">Merchant / Entry</th>
+<th class="p-4 font-label-md text-label-md text-on-surface uppercase tracking-wider w-1/5 text-right">Amount</th>
+<th class="p-4 font-label-md text-label-md text-on-surface uppercase tracking-wider w-1/5 text-center">Avoidable?</th>
+</tr>
+</thead>
+<tbody class="font-body-md text-body-md">
+<!-- Row 1 -->
+<tr class="border-b-2 border-ink-black hover:bg-surface-container-low transition-colors">
+<td class="p-4 text-on-surface-variant font-label-md">Oct 24, 1955</td>
+<td class="p-4 text-ink-black font-medium">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full border border-ink-black bg-primary-container flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-on-primary-container text-sm">restaurant</span>
+</div>
+<div class="">
+                                        La Maison Dorée
+                                        <div class="text-sm text-on-surface-variant font-label-md">Dining out</div>
+</div>
+</div>
+</td>
+<td class="p-4 text-right text-ink-black font-label-md">-$450.00</td>
+<td class="p-4 text-center">
+<label class="inline-flex items-center cursor-pointer relative">
+<input checked="" class="sr-only switch-input" type="checkbox">
+<div class="switch-bg w-11 h-6 bg-surface-container-highest border-2 border-ink-black rounded-full transition-colors relative">
+<div class="switch-knob absolute top-0.5 left-0.5 w-4 h-4 bg-white border-2 border-ink-black rounded-full transition-transform flex items-center justify-center">
+<span class="material-symbols-outlined text-[10px] text-ink-black" style="font-variation-settings: 'FILL' 1;">diamond</span>
+</div>
+</div>
+</label>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="border-b-2 border-ink-black hover:bg-surface-container-low transition-colors">
+<td class="p-4 text-on-surface-variant font-label-md">Oct 22, 1955</td>
+<td class="p-4 text-ink-black font-medium">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full border border-ink-black bg-mint-green flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-ink-black text-sm">home</span>
+</div>
+<div class="">
+                                        Estate Utilities
+                                        <div class="text-sm text-on-surface-variant font-label-md">Housing</div>
+</div>
+</div>
+</td>
+<td class="p-4 text-right text-ink-black font-label-md">-$1,200.00</td>
+<td class="p-4 text-center">
+<label class="inline-flex items-center cursor-pointer relative">
+<input class="sr-only switch-input" type="checkbox">
+<div class="switch-bg w-11 h-6 bg-surface-container-highest border-2 border-ink-black rounded-full transition-colors relative">
+<div class="switch-knob absolute top-0.5 left-0.5 w-4 h-4 bg-white border-2 border-ink-black rounded-full transition-transform flex items-center justify-center">
+</div>
+</div>
+</label>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="border-b-2 border-ink-black hover:bg-surface-container-low transition-colors bg-mint-green/20">
+<td class="p-4 text-on-surface-variant font-label-md">Oct 20, 1955</td>
+<td class="p-4 text-ink-black font-medium">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full border border-ink-black bg-coin-gold flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-ink-black text-sm" style="font-variation-settings: 'FILL' 1;">payments</span>
+</div>
+<div class="">
+                                        Goliath National Bank
+                                        <div class="text-sm text-on-surface-variant font-label-md">Salary / Deposit</div>
+</div>
+</div>
+</td>
+<td class="p-4 text-right text-secondary font-label-md font-bold">+$12,500.00</td>
+<td class="p-4 text-center">
+<span class="text-on-surface-variant text-sm italic font-body-md">-</span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="border-b-2 border-ink-black hover:bg-surface-container-low transition-colors">
+<td class="p-4 text-on-surface-variant font-label-md">Oct 18, 1955</td>
+<td class="p-4 text-ink-black font-medium">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full border border-ink-black bg-surface-variant flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-ink-black text-sm">local_mall</span>
+</div>
+<div class="">
+                                        Sartorial Splendor Tailors
+                                        <div class="text-sm text-on-surface-variant font-label-md">Shopping</div>
+</div>
+</div>
+</td>
+<td class="p-4 text-right text-ink-black font-label-md">-$850.00</td>
+<td class="p-4 text-center">
+<label class="inline-flex items-center cursor-pointer relative">
+<input checked="" class="sr-only switch-input" type="checkbox">
+<div class="switch-bg w-11 h-6 bg-surface-container-highest border-2 border-ink-black rounded-full transition-colors relative">
+<div class="switch-knob absolute top-0.5 left-0.5 w-4 h-4 bg-white border-2 border-ink-black rounded-full transition-transform flex items-center justify-center">
+<span class="material-symbols-outlined text-[10px] text-ink-black" style="font-variation-settings: 'FILL' 1;">diamond</span>
+</div>
+</div>
+</label>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination / Footer -->
+<div class="bg-surface-container-low p-4 border-t-3 border-ink-black flex justify-center items-center gap-4">
+<button class="p-2 comic-sub-panel bg-white rounded-full hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<span class="font-label-md text-label-md text-on-surface-variant">Page 1 of 42</span>
+<button class="p-2 comic-sub-panel bg-white rounded-full hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</main>
+
+
+
+</body></html>

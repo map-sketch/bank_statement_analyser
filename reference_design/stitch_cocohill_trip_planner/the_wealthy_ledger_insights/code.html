@@ -1,0 +1,386 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Analysis Dashboard - Richie Bank Statement</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&amp;family=JetBrains+Mono:wght@500&amp;family=Literata:wght@400&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#fff8f5",
+                        "primary": "#735c00",
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6",
+                        "on-tertiary": "#ffffff",
+                        "on-surface": "#291806",
+                        "ink-black": "#1A1A1A",
+                        "on-primary": "#ffffff",
+                        "tertiary": "#5e604d",
+                        "inheritance-red": "#C41E3A",
+                        "primary-fixed": "#ffe088",
+                        "primary-container": "#d4af37",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed-dim": "#e9c349",
+                        "on-primary-fixed": "#241a00",
+                        "on-primary-container": "#554300",
+                        "on-secondary-fixed": "#002105",
+                        "surface-variant": "#fedcbe",
+                        "on-tertiary-container": "#454634",
+                        "on-secondary-fixed-variant": "#005316",
+                        "surface-container-low": "#fff1e7",
+                        "coin-gold": "#D4AF37",
+                        "tertiary-container": "#b4b49d",
+                        "secondary-container": "#90f691",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed-dim": "#c8c8b0",
+                        "surface": "#fff8f5",
+                        "tertiary-fixed": "#e4e4cc",
+                        "mint-green": "#98FF98",
+                        "on-error": "#ffffff",
+                        "surface-container-highest": "#fedcbe",
+                        "surface-container": "#ffeada",
+                        "secondary-fixed": "#93f993",
+                        "inverse-primary": "#e9c349",
+                        "on-surface-variant": "#4d4635",
+                        "inverse-on-surface": "#ffeee0",
+                        "on-primary-fixed-variant": "#574500",
+                        "secondary": "#006e20",
+                        "outline-variant": "#d0c5af",
+                        "surface-bright": "#fff8f5",
+                        "on-secondary-container": "#007322",
+                        "surface-container-high": "#ffe3cc",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed": "#1b1d0e",
+                        "on-tertiary-fixed-variant": "#474836",
+                        "secondary-fixed-dim": "#77dc7a",
+                        "surface-dim": "#f6d4b6",
+                        "outline": "#7f7663",
+                        "surface-tint": "#735c00",
+                        "parchment-white": "#FDFBF7",
+                        "on-background": "#291806",
+                        "inverse-surface": "#402c18"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "gutter": "24px",
+                        "margin": "32px",
+                        "container-max": "1120px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Bricolage Grotesque"],
+                        "label-md": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Bricolage Grotesque"],
+                        "headline-md": ["Bricolage Grotesque"],
+                        "body-lg": ["Literata"],
+                        "headline-sm": ["Bricolage Grotesque"],
+                        "body-md": ["Literata"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["36px", { "lineHeight": "44px", "fontWeight": "800" }],
+                        "headline-md": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-sm": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .comic-border {
+            border-width: 3px;
+            border-color: #1A1A1A;
+            border-style: solid;
+        }
+        .comic-border-sm {
+            border-width: 1.5px;
+            border-color: #1A1A1A;
+            border-style: solid;
+        }
+        .comic-shadow {
+            box-shadow: 4px 4px 0px 0px rgba(212,175,55,1);
+        }
+        .comic-shadow-sm {
+            box-shadow: 2px 2px 0px 0px rgba(212,175,55,1);
+        }
+        .halftone-bg {
+            background-image: radial-gradient(#1A1A1A 10%, transparent 11%), radial-gradient(#1A1A1A 10%, transparent 11%);
+            background-size: 10px 10px;
+            background-position: 0 0, 5px 5px;
+            opacity: 0.05;
+        }
+        .speech-bubble {
+            position: relative;
+            background: #ffffff;
+            border: 3px solid #1A1A1A;
+            border-radius: 0.5rem;
+            padding: 1rem;
+        }
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 20px;
+            border-width: 15px 15px 0;
+            border-style: solid;
+            border-color: #1A1A1A transparent transparent transparent;
+            display: block;
+            width: 0;
+        }
+        .speech-bubble::before {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 22px;
+            border-width: 12px 12px 0;
+            border-style: solid;
+            border-color: #ffffff transparent transparent transparent;
+            display: block;
+            width: 0;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col md:flex-row">
+<!-- SideNavBar (Desktop) -->
+<nav class="hidden md:flex flex-col h-screen w-64 border-r-4 border-ink-black shadow-[6px_0px_0px_0px_rgba(212,175,55,1)] bg-surface-container-low p-unit fixed top-0 left-0 z-40">
+<div class="mb-8 p-4">
+<div class="flex items-center gap-4 mb-2">
+<img class="w-12 h-12 rounded-full comic-border-sm bg-surface" data-alt="A vintage comic book style illustration of a wealthy older gentleman character wearing a classic black top hat and a gold monocle. The art style features heavy black ink lines and simple flat coloring typical of 1950s comics. He has a jovial expression and is set against a pale cream background. The image is cropped to a circular avatar format." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDImEVG9paYqBjB1vlzx6ww6eBWKIfxTCHQmnrsnFuqx3JoeQ-ZqL2C96rMUhX36jA5Xn8MKa8gJ923jICvd2aQnTkPoICPuF0NUUzTYP_vxeOcaUgpFRm7Gla9hGObCGMVIWsjdzBMbJ9s4G_2Cv5J8N3eyKodoPfk_JaCgubFRgkrA29lzfFyho0xax1RNcRt8UoEBrmJdOPG92DKg1HDRf8oz8Z_xv8DwJvhBvPmLbYwXhcCF1TB-Ns_oE6Z7gBAeQ7F5xZHcSM">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-primary">The Vault</h2>
+<p class="font-label-md text-label-md text-on-surface-variant">Wealth Management</p>
+</div>
+</div>
+
+</div>
+<div class="flex-1 space-y-2">
+<a class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-variant hover:translate-x-1 transition-all" href="#">
+<span class="material-symbols-outlined">account_balance</span>
+<span class="font-label-md text-label-md">Vault</span>
+</a>
+<a class="flex items-center gap-3 p-3 bg-primary-container text-on-primary-container border-2 border-ink-black shadow-[3px_3px_0px_0px_rgba(26,26,26,1)] rounded-lg scale-95 duration-100" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">assignment</span>
+<span class="font-label-md text-label-md font-bold">Bank Statement</span>
+</a>
+
+
+
+</div>
+<div class="mt-auto space-y-2 pt-4 border-t-2 border-ink-black border-dashed">
+<a class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined">lock</span>
+<span class="font-label-md text-label-md">Security</span>
+</a>
+<a class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-md text-label-md">Support</span>
+</a>
+</div>
+</nav>
+<!-- TopAppBar (Mobile) -->
+<header class="md:hidden fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter py-4 bg-background border-b-4 border-ink-black shadow-[4px_4px_0px_0px_rgba(212,175,55,1)]">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary italic">Richie Bank Statement</h1>
+<div class="flex gap-4 text-primary">
+<span class="material-symbols-outlined hover:bg-surface-container-high transition-transform hover:-translate-y-1 p-1 rounded-full cursor-pointer">account_balance_wallet</span>
+<span class="material-symbols-outlined hover:bg-surface-container-high transition-transform hover:-translate-y-1 p-1 rounded-full cursor-pointer">history</span>
+<span class="material-symbols-outlined hover:bg-surface-container-high transition-transform hover:-translate-y-1 p-1 rounded-full cursor-pointer">settings</span>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-64 pt-24 md:pt-8 px-4 md:px-gutter pb-24 md:pb-8 max-w-container-max mx-auto w-full relative">
+<div class="absolute inset-0 halftone-bg pointer-events-none"></div>
+<div class="relative z-10 space-y-8">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-b-3 border-ink-black pb-4">
+<div>
+<h1 class="font-headline-md text-headline-md-mobile md:text-headline-md mb-2">Analysis Dashboard</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Reviewing your financial exploits, old bean.</p>
+</div>
+<div class="bg-surface-container-low p-2 rounded-lg comic-border flex items-center gap-2">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="font-label-md text-label-md">October 1955</span>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Time Series Chart Panel (Full width on mobile, 8 cols on desktop) -->
+<div class="col-span-1 md:col-span-8 bg-surface-bright rounded-xl comic-border comic-shadow p-6 relative overflow-hidden">
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-headline-sm text-headline-sm flex items-center gap-2"><span class="material-symbols-outlined text-coin-gold">show_chart</span> The Monthly Bank Statement</h2>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-surface-container-high comic-border-sm rounded-full font-label-md text-label-md">Daily</span>
+<span class="px-3 py-1 bg-primary-container text-on-primary-container comic-border-sm rounded-full font-label-md text-label-md font-bold">Weekly</span>
+</div>
+</div>
+<div class="w-full h-64 bg-surface-container-low border-b-2 border-ink-black relative">
+<canvas id="spendingChart" width="884" height="381" style="display: block; box-sizing: border-box; height: 254px; width: 589.3px;"></canvas>
+<!-- Character Cameo -->
+<img class="absolute -bottom-4 -right-4 w-20 h-20 rotate-[-10deg]" data-alt="A small spot illustration of an anthropomorphic sack of money with a cartoon face, stick arms and legs, wearing a tiny bowler hat. It is gesturing enthusiastically towards a rising chart line. Drawn in a classic 1950s comic book style with bold ink outlines and simple solid colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6xqqYIwCHAtKtan-L2XuSgRpgf1L5NgMrsfXfNvtMFirXJaAJF5AulVYMeN9ua8IWpbuYYheTu1E7SGptbXGS4gF3ysrv-fjJ9ef_H_EtvLRV0ygqXFVGHmQ0vi3DZgMCugCKqFPROCj2U6d2AJ2mH2wDKVJK_sArzw5H_taAknmKL-ulZyzIQALneClrpKRVfgt-E2ec8j1s-G4SvHU6QpeRkIO2MATbiyNCzq7suyokOg61aSD5zd8Rw7C-rImE5evoQcfBogE">
+</div>
+</div>
+<!-- Fun Facts Panel (Full width on mobile, 4 cols on desktop) -->
+<div class="col-span-1 md:col-span-4 bg-surface-variant rounded-xl comic-border comic-shadow p-6 flex flex-col items-center text-center relative">
+<h2 class="font-headline-sm text-headline-sm mb-6 w-full text-left">Notable Observations</h2>
+<div class="speech-bubble mb-8 shadow-sm">
+<p class="font-body-lg text-body-lg italic">"My, my! You spent <strong class="text-inheritance-red">₹850</strong> most often this month! Someone has a taste for fine caviar!"</p>
+</div>
+<img class="w-32 h-auto mt-auto" data-alt="A waist-up illustration of a wealthy comic book character, resembling a 1950s tycoon. He is wearing a pinstripe suit, a red bow tie, and holding a silver-tipped cane. He is looking up thoughtfully towards a speech bubble. The artwork features thick black outlines, limited flat colors in pastel shades, and a slight halftone texture pattern to mimic vintage newsprint." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4PoVCDkLUpYbcNhdfd-1cXSvCwTluOUOwtO20qx07TlbA6A5S-wTB4mvlI7mI_5S2D5_Ds3uAII5mlT2if_zj1E-b7_WH8YFJs9HoNDFTdPQ0Z-3jigjfvQa8MKvl86XvDq77TNOpTaKtcG7Yh6ugmFJdAgyD45ZE7VH-rdo1rjJTiuIVDQPkhnrztnHmuYUglrIgoO3Fu34ayaKJaLAZwMgBlnBe2JZWBDLu6grPLTy6IgX3rN3A5VCwNAzakBItvLjqaPO5xGE">
+</div>
+<!-- Pie Chart Panel (Full width on mobile, 6 cols on desktop) -->
+<div class="col-span-1 md:col-span-6 bg-surface-bright rounded-xl comic-border comic-shadow p-6">
+<h2 class="font-headline-sm text-headline-sm mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-coin-gold">pie_chart</span>
+                        Expense Classification
+                    </h2>
+<div class="flex flex-col md:flex-row items-center gap-8">
+<div class="w-48 h-48 relative">
+<canvas id="categoryChart" width="288" height="288" style="display: block; box-sizing: border-box; height: 192px; width: 192px;"></canvas>
+</div>
+<div class="flex-1 space-y-4 w-full">
+<div class="flex justify-between items-center p-3 border-2 border-ink-black rounded-lg bg-error-container">
+<div class="flex items-center gap-2">
+<div class="w-4 h-4 rounded-full bg-inheritance-red border-2 border-ink-black"></div>
+<span class="font-label-md text-label-md font-bold text-on-error-container">Extravagances</span>
+</div>
+<span class="font-label-md text-label-md font-bold">65%</span>
+</div>
+<div class="flex justify-between items-center p-3 border-2 border-ink-black rounded-lg bg-secondary-container">
+<div class="flex items-center gap-2">
+<div class="w-4 h-4 rounded-full bg-mint-green border-2 border-ink-black"></div>
+<span class="font-label-md text-label-md font-bold text-on-secondary-container">Necessities</span>
+</div>
+<span class="font-label-md text-label-md font-bold">35%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Summary Cards (Full width on mobile, 6 cols on desktop) -->
+<div class="col-span-1 md:col-span-6 grid grid-cols-2 gap-4">
+<div class="bg-surface-container-high p-4 rounded-xl comic-border-sm comic-shadow-sm flex flex-col justify-center">
+<span class="material-symbols-outlined text-tertiary mb-2 text-3xl">account_balance_wallet</span>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase mb-1">Total Outflow</p>
+<p class="font-headline-md text-headline-md">₹14,250</p>
+</div>
+<div class="bg-surface-container-high p-4 rounded-xl comic-border-sm comic-shadow-sm flex flex-col justify-center">
+<span class="material-symbols-outlined text-secondary mb-2 text-3xl">savings</span>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase mb-1">Vaulted</p>
+<p class="font-headline-md text-headline-md text-secondary">₹5,000</p>
+</div>
+<div class="bg-surface-container-high p-4 rounded-xl comic-border-sm comic-shadow-sm flex flex-col justify-center col-span-2">
+<p class="font-label-md text-label-md text-on-surface-variant uppercase mb-2">Vault Capacity</p>
+<div class="h-6 w-full bg-surface-container-lowest comic-border-sm rounded-full overflow-hidden relative">
+<div class="absolute top-0 left-0 h-full bg-coin-gold w-[75%] border-r-2 border-ink-black"></div>
+<div class="absolute inset-0 halftone-bg opacity-20"></div>
+</div>
+<div class="flex justify-between mt-1">
+<span class="font-label-md text-label-md">75% Full</span>
+<span class="font-label-md text-label-md">Goal: ₹20k</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 bg-background border-t-4 border-ink-black rounded-t-xl shadow-[0px_-4px_0px_0px_rgba(212,175,55,1)]">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary" href="#">
+<span class="material-symbols-outlined">lock</span>
+<span class="font-label-md text-label-md-mobile">Vault</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary text-on-primary rounded-xl px-4 py-1 border-2 border-ink-black scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+<span class="font-label-md text-label-md-mobile font-bold">Bank Statement</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary" href="#">
+<span class="material-symbols-outlined">card_giftcard</span>
+<span class="font-label-md text-label-md-mobile">Treasury</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary" href="#">
+<span class="material-symbols-outlined">support_agent</span>
+<span class="font-label-md text-label-md-mobile">Help</span>
+</a>
+</nav>
+<script>
+        // Chart.js Configuration
+        Chart.defaults.font.family = "'JetBrains Mono', monospace";
+        Chart.defaults.color = '#291806';
+
+        // Time Series Chart
+        const ctxLine = document.getElementById('spendingChart').getContext('2d');
+        new Chart(ctxLine, {
+            type: 'line',
+            data: {
+                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                datasets: [{
+                    label: 'Outflow',
+                    data: [3200, 4500, 2100, 4450],
+                    borderColor: '#1A1A1A',
+                    backgroundColor: '#D4AF37',
+                    borderWidth: 3,
+                    pointBackgroundColor: '#fff8f5',
+                    pointBorderColor: '#1A1A1A',
+                    pointBorderWidth: 3,
+                    pointRadius: 6,
+                    tension: 0.1,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: '#fedcbe', borderDash: [5, 5] },
+                        border: { dash: [5, 5], color: '#1A1A1A', width: 2 }
+                    },
+                    x: {
+                        grid: { display: false },
+                        border: { color: '#1A1A1A', width: 2 }
+                    }
+                }
+            }
+        });
+
+        // Pie Chart
+        const ctxPie = document.getElementById('categoryChart').getContext('2d');
+        new Chart(ctxPie, {
+            type: 'pie',
+            data: {
+                labels: ['Extravagances', 'Necessities'],
+                datasets: [{
+                    data: [65, 35],
+                    backgroundColor: ['#C41E3A', '#98FF98'],
+                    borderColor: '#1A1A1A',
+                    borderWidth: 3,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } }
+            }
+        });
+    </script>
+
+
+
+</body></html>
