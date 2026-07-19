@@ -38,3 +38,8 @@ from app.api.upload import router as upload_router
 from app.api.fetch import router as fetch_router
 app.include_router(upload_router, prefix="/api")
 app.include_router(fetch_router, prefix="/api")
+
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("app.main:app", host="0.0.0.0", port=port)
