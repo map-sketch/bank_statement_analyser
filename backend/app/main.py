@@ -9,9 +9,10 @@ import os
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup: init DB, load ML model
-    db_path = settings.DATABASE_URL.replace("sqlite:///", "")
-    if db_path:
-        os.makedirs(os.path.dirname(db_path), exist_ok=True)
+    if settings.DATABASE_URL.startswith("sqlite:///"):
+        db_path = settings.DATABASE_URL.replace("sqlite:///", "")
+        if db_path:
+            os.makedirs(os.path.dirname(db_path), exist_ok=True)
         
     init_db()
     yield
