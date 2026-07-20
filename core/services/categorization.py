@@ -47,6 +47,13 @@ class CategorizationEngine:
                 if pred_cat == "Food" and confidence < 0.6 and amount > 2500:
                     return "Personal", round(confidence, 2), "ml_model_high_val"
                 
+                if confidence < 0.7 and "UPI" in description and "-" in description:
+                    suffix = description.split("-")[-1].strip()
+                    if suffix and not suffix.isnumeric():
+                        mapped_cat = match_merchant(suffix)
+                        final_cat = mapped_cat if mapped_cat else suffix.title()
+                        return final_cat, round(confidence, 2), "upi_suffix"
+
                 if confidence >= 0.3:
                     return pred_cat, round(confidence, 2), "ml_model"
                     
