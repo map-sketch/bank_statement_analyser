@@ -44,7 +44,7 @@ class CategorizationEngine:
                 confidence = max(probs)
                 
                 # Confidence thresholding
-                if pred_cat == "Food" and confidence < 0.6 and amount > 2500:
+                if pred_cat == "Food" and confidence < 0.7 and amount > 2500:
                     return "Personal", round(confidence, 2), "ml_model_high_val"
                 
                 if confidence < 0.7 and "UPI" in description and "-" in description:
