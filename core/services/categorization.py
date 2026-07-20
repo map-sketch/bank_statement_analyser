@@ -1,12 +1,12 @@
 import joblib
 import os
 from sqlalchemy.orm import Session
-from app.models.db_models import TransactionModel
-from app.rules.upi_parser import extract_upi_payee
-from app.rules.merchant_dict import match_merchant
-from app.rules.patterns import TRANSACTION_PATTERNS
-from app.ml.preprocessor import preprocess_text
-from app.config import settings
+from core.models.db_models import TransactionModel
+from core.rules.upi_parser import extract_upi_payee
+from core.rules.merchant_dict import match_merchant
+from core.rules.patterns import TRANSACTION_PATTERNS
+from core.ml.preprocessor import preprocess_text
+from core.config import settings
 
 class CategorizationEngine:
     def __init__(self):

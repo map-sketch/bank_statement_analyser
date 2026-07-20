@@ -1,6 +1,0 @@
-[theme]
-primaryColor = "#d4af37" # Coin Gold
-backgroundColor = "#fff8f5" # Parchment White background
-secondaryBackgroundColor = "#ffeada" # Surface container
-textColor = "#291806" # Ink Black (on-background)
-font = "serif" # Mimic Literata

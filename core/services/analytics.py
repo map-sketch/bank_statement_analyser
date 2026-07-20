@@ -2,8 +2,8 @@ import json
 import pandas as pd
 from typing import List, Dict
 from sqlalchemy.orm import Session
-from app.models.db_models import TransactionModel, AnalyticsCacheModel
-from app.models.schemas import AnalyticsResponse, Summary, CategoryBreakdownItem, AvoidableSplit, DailySpending, Insight
+from core.models.db_models import TransactionModel, AnalyticsCacheModel
+from core.models.schemas import AnalyticsResponse, Summary, CategoryBreakdownItem, AvoidableSplit, DailySpending, Insight
 
 # Categories deemed avoidable by default
 AVOIDABLE_CATEGORIES = {"Food", "Entertainment", "Shopping", "Coffee", "Personal"}

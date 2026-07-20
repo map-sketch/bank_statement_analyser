@@ -3,11 +3,11 @@ import uuid
 import pandas as pd
 from datetime import datetime
 from sqlalchemy.orm import Session
-from app.models.db_models import SessionModel, TransactionModel
-from app.bank_formats.registry import registry
-from app.models.schemas import UploadResponse, DateRange
-from app.services.categorization import categorize_all
-from app.services.analytics import compute_analytics
+from core.models.db_models import SessionModel, TransactionModel
+from core.bank_formats.registry import registry
+from core.models.schemas import UploadResponse, DateRange
+from core.services.categorization import categorize_all
+from core.services.analytics import compute_analytics
 
 def find_and_set_header(df: pd.DataFrame) -> pd.DataFrame:
     keywords = {'date', 'narration', 'description', 'withdrawal', 'deposit', 'balance', 'chq', 'ref', 'value dt', 'credit', 'debit', 'amount', 'particulars'}

@@ -66,33 +66,24 @@ The system follows a **layered, modular monorepo architecture** with a clear sep
 
 ## 2. Technology Stack
 
-### 2.1 Frontend
-
+### 2.1 UI & Frontend
 | Technology | Purpose | Version |
 |---|---|---|
-| **Streamlit** | Component-based UI framework | Latest |
-| **Streamlit** | Build tool & dev server | Latest |
-| **Plotly / Altair** | Interactive charts (time-series, pie, bar) | Latest |
-| **Streamlit Session State** | Lightweight state management | Latest |
-| **Axios** | HTTP client for API communication | Latest |
-| **Streamlit Dropzone** | Drag-and-drop file upload | Latest |
-| **Framer Motion** | Micro-animations & transitions | Latest |
-| **Lucide Streamlit** | Icon set | Latest |
+| **Streamlit** | Core Application & UI framework | Latest |
+| **Plotly** | Interactive charts (time-series, pie, bar) | Latest |
+| **Streamlit Session State** | Lightweight state management | Built-in |
 
-### 2.2 Backend
-
+### 2.2 Core Backend & Data
 | Technology | Purpose | Version |
 |---|---|---|
 | **Python** | Core language | 3.11+ |
-| **FastAPI** | REST API framework | Latest |
-| **Uvicorn** | ASGI server | Latest |
 | **Pandas** | Data manipulation & analysis | Latest |
 | **openpyxl** | Excel file parsing (.xlsx) | Latest |
 | **xlrd** | Legacy Excel parsing (.xls) | Latest |
 | **scikit-learn** | ML classification (Naive Bayes / SVM) | Latest |
 | **joblib** | Model serialization / loading | Latest |
 | **SQLite** | Local persistent storage | Built-in |
-| **SQLAlchemy** | ORM for SQLite (optional) | Latest |
+| **SQLAlchemy** | ORM for SQLite | Latest |
 | **Pydantic** | Data validation & serialization | Latest (v2) |
 
 ### 2.3 ML Pipeline
@@ -108,137 +99,69 @@ The system follows a **layered, modular monorepo architecture** with a clear sep
 
 ## 3. Project Structure (Monorepo)
 
-```
+```text
 bank-statement-analyser/
 │
-├── frontend/                          # Streamlit + Streamlit frontend
-│   ├── public/
-│   ├── src/
-│   │   ├── assets/                    # Static assets, fonts, images
-│   │   ├── components/                # Reusable UI components
-│   │   │   ├── upload/
-│   │   │   │   └── FileUpload.jsx     # Drag-and-drop upload widget
-│   │   │   ├── dashboard/
-│   │   │   │   ├── SpendingTimeline.jsx    # Time-series spending chart
-│   │   │   │   ├── CategoryBreakdown.jsx   # Category pie/bar chart
-│   │   │   │   ├── AvoidableChart.jsx      # Avoidable vs unavoidable donut
-│   │   │   │   ├── SummaryCards.jsx        # Income/expense/savings KPI cards
-│   │   │   │   └── MonthlyTrend.jsx        # Multi-month comparison (if avail)
-│   │   │   ├── insights/
-│   │   │   │   └── FunInsightsCard.jsx     # Quirky behavioral fact snippets
-│   │   │   ├── transactions/
-│   │   │   │   ├── TransactionTable.jsx    # Searchable, sortable table
-│   │   │   │   └── AvoidableToggle.jsx     # Toggle switch per row
-│   │   │   └── common/
-│   │   │       ├── Navbar.jsx
-│   │   │       ├── Sidebar.jsx
-│   │   │       ├── LoadingSpinner.jsx
-│   │   │       └── ExportButton.jsx
-│   │   ├── pages/
-│   │   │   ├── UploadPage.jsx         # Landing — file upload
-│   │   │   ├── DashboardPage.jsx      # Main analytics dashboard
-│   │   │   └── TransactionsPage.jsx   # Full transaction list + overrides
-│   │   ├── hooks/
-│   │   │   ├── useFileUpload.js       # Upload logic & progress state
-│   │   │   └── useAnalytics.js        # Fetch & cache analytics data
-│   │   ├── store/
-│   │   │   └── useAppStore.js         # Streamlit Session State global state
-│   │   ├── services/
-│   │   │   └── api.js                 # Axios instance & API call wrappers
-│   │   ├── utils/
-│   │   │   ├── formatters.js          # Currency, date formatters
-│   │   │   └── constants.js           # Category colors, labels
-│   │   ├── styles/
-│   │   │   ├── index.css              # Global styles, design tokens
-│   │   │   ├── variables.css          # CSS custom properties
-│   │   │   └── animations.css         # Keyframe animations
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   ├── index.html
-│   ├── vite.config.js
-│   └── package.json
+├── app.py                             # Streamlit Monolith UI + Entry Point
 │
-├── backend/                           # Python FastAPI backend
-│   ├── app/
+├── core/                              # Core Python Logic
+│   ├── __init__.py
+│   ├── config.py                      # App configuration & constants
+│   │
+│   ├── services/                      # Core business logic
 │   │   ├── __init__.py
-│   │   ├── main.py                    # FastAPI app entry, CORS, lifespan
-│   │   ├── config.py                  # App configuration & constants
-│   │   │
-│   │   ├── api/                       # API route handlers
-│   │   │   ├── __init__.py
-│   │   │   ├── upload.py              # POST /api/upload
-│   │   │   ├── analyze.py             # GET  /api/analyze/{session_id}
-│   │   │   ├── transactions.py        # GET/PATCH /api/transactions/{session_id}
-│   │   │   └── export.py              # GET  /api/export/{session_id}
-│   │   │
-│   │   ├── services/                  # Core business logic
-│   │   │   ├── __init__.py
-│   │   │   ├── ingestion.py           # File parsing, bank detection, normalization
-│   │   │   ├── categorization.py      # Rule-based + ML categorization pipeline
-│   │   │   ├── analytics.py           # Salary detection, anomaly filtering, insights
-│   │   │   ├── avoidability.py        # Avoidable/unavoidable tagging engine
-│   │   │   └── export_service.py      # CSV, XLS, XLSX, TXT, Delimited export generation
-│   │   │
-│   │   ├── ml/                        # Machine Learning module
-│   │   │   ├── __init__.py
-│   │   │   ├── model.py               # Model loading, prediction interface
-│   │   │   ├── trainer.py             # Training script (offline, one-time)
-│   │   │   └── preprocessor.py        # Text cleaning, tokenization for ML
-│   │   │
-│   │   ├── bank_formats/              # Bank format registry
-│   │   │   ├── __init__.py
-│   │   │   ├── registry.py            # Auto-detection logic + format loader
-│   │   │   ├── base.py                # Abstract base parser class
-│   │   │   ├── hdfc.py                # HDFC format parser
-│   │   │   ├── sbi.py                 # SBI format parser
-│   │   │   ├── icici.py               # ICICI format parser
-│   │   │   ├── axis.py                # Axis format parser
-│   │   │   └── kotak.py               # Kotak format parser
-│   │   │
-│   │   ├── rules/                     # Rule-based categorization rules
-│   │   │   ├── __init__.py
-│   │   │   ├── upi_parser.py          # UPI format regex extractor
-│   │   │   ├── merchant_dict.py       # Known merchant → category mapping
-│   │   │   └── patterns.py            # ATM, NEFT, RTGS, IMPS, EMI patterns
-│   │   │
-│   │   ├── models/                    # Data models (Pydantic / SQLAlchemy)
-│   │   │   ├── __init__.py
-│   │   │   ├── schemas.py             # Pydantic request/response schemas
-│   │   │   └── db_models.py           # SQLAlchemy ORM models
-│   │   │
-│   │   ├── db/                        # Database layer
-│   │   │   ├── __init__.py
-│   │   │   ├── database.py            # SQLite connection & session management
-│   │   │   └── migrations.py          # Schema creation / migration helpers
-│   │   │
-│   │   └── placeholders/              # Future phase stubs
-│   │       ├── __init__.py
-│   │       ├── enterprise.py          # Enterprise analysis placeholder
-│   │       └── fraud.py               # Fraud detection placeholder
+│   │   ├── ingestion.py               # File parsing, bank detection, normalization
+│   │   ├── categorization.py          # Rule-based + ML categorization pipeline
+│   │   ├── analytics.py               # Salary detection, anomaly filtering, insights
+│   │   ├── avoidability.py            # Avoidable/unavoidable tagging engine
+│   │   └── export_service.py          # Export generation
 │   │
-│   ├── ml_models/                     # Serialized ML model artifacts
-│   │   ├── category_classifier.pkl    # Trained classifier
-│   │   └── tfidf_vectorizer.pkl       # Fitted TF-IDF vectorizer
+│   ├── ml/                            # Machine Learning module
+│   │   ├── __init__.py
+│   │   ├── trainer.py                 # Training script (offline, one-time)
+│   │   └── preprocessor.py            # Text cleaning, tokenization for ML
 │   │
-│   ├── data/                          # Local data directory
-│   │   ├── uploads/                   # Temp uploaded files
-│   │   ├── training/                  # Training datasets (labeled CSVs)
-│   │   └── bank_statement.db          # SQLite database file
+│   ├── bank_formats/                  # Bank format registry
+│   │   ├── __init__.py
+│   │   ├── registry.py                # Auto-detection logic + format loader
+│   │   ├── base.py                    # Abstract base parser class
+│   │   ├── hdfc.py                    # HDFC format parser
+│   │   ├── sbi.py                     # SBI format parser
+│   │   ├── icici.py                   # ICICI format parser
+│   │   ├── axis.py                    # Axis format parser
+│   │   └── kotak.py                   # Kotak format parser
 │   │
-│   ├── tests/                         # Unit & integration tests
-│   │   ├── test_ingestion.py
-│   │   ├── test_categorization.py
-│   │   ├── test_analytics.py
-│   │   └── test_api.py
+│   ├── rules/                         # Rule-based categorization rules
+│   │   ├── __init__.py
+│   │   ├── upi_parser.py              # UPI format regex extractor
+│   │   ├── merchant_dict.py           # Known merchant → category mapping
+│   │   └── patterns.py                # ATM, NEFT, RTGS, IMPS, EMI patterns
 │   │
-│   ├── requirements.txt
-│   └── pyproject.toml
+│   ├── models/                        # Data models (Pydantic / SQLAlchemy)
+│   │   ├── __init__.py
+│   │   ├── schemas.py                 # Pydantic internal schemas
+│   │   └── db_models.py               # SQLAlchemy ORM models
+│   │
+│   └── db/                            # Database layer
+│       ├── __init__.py
+│       └── database.py                # SQLite connection & session management
+│
+├── ml_models/                         # Serialized ML model artifacts
+│   ├── category_classifier.pkl        # Trained classifier
+│   └── tfidf_vectorizer.pkl           # Fitted TF-IDF vectorizer
+│
+├── data/                              # Local data directory
+│   ├── uploads/                       # Temp uploaded files
+│   ├── training/                      # Training datasets (labeled CSVs)
+│   └── bank_statement.db              # SQLite database file
 │
 ├── docs/                              # Project documentation
 │   ├── context.md
+│   ├── deployment_plan.md
 │   └── architecture.md                # ← This file
 │
 ├── .gitignore
+├── requirements.txt
 └── README.md
 ```
 

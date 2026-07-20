@@ -13,11 +13,10 @@ __pycache__/
 *$py.class
 
 # Data & Models
-backend/data/bank_statement.db
-backend/data/uploads/*
-backend/ml_models/*.pkl
-!backend/data/uploads/.gitkeep
-!backend/ml_models/.gitkeep
+data/bank_statement.db
+data/uploads/*
+!data/uploads/.gitkeep
+!ml_models/.gitkeep
 *.csv
 *.xls
 *.xlsx

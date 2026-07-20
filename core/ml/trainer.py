@@ -4,7 +4,7 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.model_selection import cross_val_score
 import joblib
 import os
-from app.ml.preprocessor import preprocess_text
+from core.ml.preprocessor import preprocess_text
 
 def train_model(training_csv: str, model_out: str, vectorizer_out: str):
     if not os.path.exists(training_csv):

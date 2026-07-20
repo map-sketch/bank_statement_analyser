@@ -1,5 +1,5 @@
 import pandas as pd
-from app.bank_formats.base import BaseBankParser
+from core.bank_formats.base import BaseBankParser
 
 class HdfcParser(BaseBankParser):
     @property

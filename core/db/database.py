@@ -1,10 +1,15 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from app.config import settings
-from app.models.db_models import Base
+from core.config import settings
+from core.models.db_models import Base
+
+import os
 
 if settings.DATABASE_URL.startswith("sqlite"):
     connect_args = {"check_same_thread": False}
+    db_path = settings.DATABASE_URL.replace("sqlite:///", "")
+    if db_path and os.path.dirname(db_path):
+        os.makedirs(os.path.dirname(db_path), exist_ok=True)
 else:
     connect_args = {}
 
@@ -19,5 +24,5 @@ def get_db():
         db.close()
 
 def init_db():
-    from app.models.db_models import SessionModel, TransactionModel, AnalyticsCacheModel
+    from core.models.db_models import SessionModel, TransactionModel, AnalyticsCacheModel
     Base.metadata.create_all(bind=engine)

@@ -1,12 +1,17 @@
 import streamlit as st
-import requests
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
-
 import os
+import tempfile
+import json
 
-API_BASE_URL = os.getenv("API_BASE_URL", "http://localhost:8000/api")
+from core.db.database import init_db, SessionLocal
+from core.services.ingestion import process_upload
+from core.models.db_models import TransactionModel, AnalyticsCacheModel
+
+# Initialize database
+init_db()
 
 st.set_page_config(page_title="AI Bank Analyzer", page_icon="🏦", layout="wide")
 
@@ -132,21 +137,41 @@ with st.sidebar:
     if uploaded_file is not None:
         if st.button("Analyze Ledger"):
             with st.spinner("Deciphering transactions..."):
-                files = {"file": (uploaded_file.name, uploaded_file.getvalue(), "application/octet-stream")}
-                response = requests.post(f"{API_BASE_URL}/upload", files=files)
-                if response.status_code == 200:
-                    st.session_state['session_id'] = response.json()["session_id"]
-                    st.success(f"Success! Detected Bank: {response.json()['bank_name']}")
-                else:
-                    st.error(f"Error: {response.text}")
+                ext = os.path.splitext(uploaded_file.name)[1].lower()
+                with tempfile.NamedTemporaryFile(delete=False, suffix=ext) as tmp:
+                    tmp.write(uploaded_file.getvalue())
+                    temp_path = tmp.name
+                
+                db = SessionLocal()
+                try:
+                    response = process_upload(temp_path, uploaded_file.name, db)
+                    st.session_state['session_id'] = response.session_id
+                    st.success(f"Success! Detected Bank: {response.bank_name}")
+                except Exception as e:
+                    st.error(f"Error: {str(e)}")
+                finally:
+                    db.close()
+                    if os.path.exists(temp_path):
+                        os.remove(temp_path)
 
 if st.session_state['session_id']:
+    db = SessionLocal()
     try:
-        analytics = requests.get(f"{API_BASE_URL}/analyze/{st.session_state['session_id']}").json()
-        txns = requests.get(f"{API_BASE_URL}/transactions/{st.session_state['session_id']}").json()
+        cache = db.query(AnalyticsCacheModel).filter(AnalyticsCacheModel.session_id == st.session_state['session_id']).first()
+        if not cache:
+            st.error("Analytics not found for session")
+            st.stop()
+        analytics = json.loads(cache.value_json)
+        
+        txns_orm = db.query(TransactionModel).filter(TransactionModel.session_id == st.session_state['session_id']).all()
+        txns = [{"date": t.date, "description": t.description, "amount": t.amount, "type": t.type, 
+                 "category": t.category, "category_confidence": t.category_confidence, 
+                 "is_anomaly": t.is_anomaly, "is_avoidable": t.is_avoidable} for t in txns_orm]
     except Exception as e:
-        st.error("Failed to fetch analytics from backend. Ensure FastAPI server is running.")
+        st.error(f"Failed to fetch analytics: {str(e)}")
         st.stop()
+    finally:
+        db.close()
 
     summary = analytics["summary"]
 

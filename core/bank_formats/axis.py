@@ -1,19 +1,20 @@
 import pandas as pd
-from app.bank_formats.base import BaseBankParser
+from core.bank_formats.base import BaseBankParser
 
-class IciciParser(BaseBankParser):
+class AxisParser(BaseBankParser):
     @property
     def bank_name(self) -> str:
-        return "ICICI Bank"
+        return "Axis Bank"
 
     def _clean_col(self, col: str) -> str:
-        return str(col).strip().lower().replace('.', '').replace('\n', ' ').replace(' (inr )', '').replace(' (inr)', '')
+        return str(col).strip().lower().replace('.', '').replace('\n', ' ')
 
     def _find_col(self, df: pd.DataFrame, aliases: set) -> str:
         for orig in df.columns:
             cleaned = self._clean_col(orig)
             if cleaned in aliases:
                 return orig
+        # Fallback to substring matching
         for orig in df.columns:
             cleaned = self._clean_col(orig)
             for alias in aliases:
@@ -22,21 +23,22 @@ class IciciParser(BaseBankParser):
         return None
 
     def detect(self, df: pd.DataFrame) -> float:
+        # Axis uniquely has "tran date" or "particulars" combined with "init br" or "init. br"
         actual = {self._clean_col(c) for c in df.columns}
-        icici_core = {"s no", "transaction date", "transaction remarks", "withdrawal amount", "deposit amount"}
+        axis_core = {"tran date", "particulars", "debit", "credit", "init br"}
         
         # Check overlap
-        overlap = len(icici_core.intersection(actual)) / len(icici_core)
+        overlap = len(axis_core.intersection(actual)) / len(axis_core)
         if overlap > 0.6:
             return overlap
         return 0.0
 
     def normalize(self, df: pd.DataFrame) -> pd.DataFrame:
-        date_col = self._find_col(df, {"transaction date", "date", "txn date"})
-        desc_col = self._find_col(df, {"transaction remarks", "description", "remarks", "narration"})
-        debit_col = self._find_col(df, {"withdrawal amount", "withdrawal", "debit"})
-        credit_col = self._find_col(df, {"deposit amount", "deposit", "credit"})
-        bal_col = self._find_col(df, {"balance"})
+        date_col = self._find_col(df, {"tran date", "transaction date", "date", "txn date"})
+        desc_col = self._find_col(df, {"particulars", "description", "narration", "remarks", "transaction remarks"})
+        debit_col = self._find_col(df, {"debit", "withdrawal", "withdrawal amt"})
+        credit_col = self._find_col(df, {"credit", "deposit", "deposit amt"})
+        bal_col = self._find_col(df, {"balance", "closing balance"})
         
         result = pd.DataFrame()
         result["date"] = pd.to_datetime(df[date_col], dayfirst=True, errors='coerce')

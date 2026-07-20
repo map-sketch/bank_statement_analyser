@@ -2,7 +2,7 @@ import importlib
 import pkgutil
 import pandas as pd
 from typing import List, Tuple
-from app.bank_formats.base import BaseBankParser
+from core.bank_formats.base import BaseBankParser
 
 class UnknownBankFormatError(Exception):
     pass
@@ -41,10 +41,10 @@ class BankFormatRegistry:
 registry = BankFormatRegistry()
 
 # Auto-register parsers
-import app.bank_formats
-for loader, module_name, is_pkg in pkgutil.walk_packages(app.bank_formats.__path__):
+import core.bank_formats
+for loader, module_name, is_pkg in pkgutil.walk_packages(core.bank_formats.__path__):
     if module_name not in ["base", "registry"]:
-        module = importlib.import_module(f"app.bank_formats.{module_name}")
+        module = importlib.import_module(f"core.bank_formats.{module_name}")
         for attribute_name in dir(module):
             attribute = getattr(module, attribute_name)
             if isinstance(attribute, type) and issubclass(attribute, BaseBankParser) and attribute is not BaseBankParser:
