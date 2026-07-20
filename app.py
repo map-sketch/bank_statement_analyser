@@ -10,8 +10,12 @@ from core.db.database import init_db, SessionLocal
 from core.services.ingestion import process_upload
 from core.models.db_models import TransactionModel, AnalyticsCacheModel
 
-# Initialize database
-init_db()
+# Initialize database once per app lifecycle
+@st.cache_resource
+def setup_database():
+    init_db()
+
+setup_database()
 
 st.set_page_config(page_title="AI Bank Analyzer", page_icon="🏦", layout="wide")
 
