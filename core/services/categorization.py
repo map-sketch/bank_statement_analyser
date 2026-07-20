@@ -18,7 +18,7 @@ class CategorizationEngine:
             self.model = joblib.load(settings.ML_MODEL_PATH)
             self.vectorizer = joblib.load(settings.ML_VECTORIZER_PATH)
             
-    def categorize(self, description: str, txn_type: str) -> tuple[str, float, str]:
+    def categorize(self, description: str, txn_type: str, amount: float = 0.0) -> tuple[str, float, str]:
         """Returns (Category, Confidence, Method)"""
         # 1. Rule-based: Pattern Matching
         for pattern, cat, _ in TRANSACTION_PATTERNS:
@@ -44,6 +44,9 @@ class CategorizationEngine:
                 confidence = max(probs)
                 
                 # Confidence thresholding
+                if pred_cat == "Food" and confidence < 0.6 and amount > 2500:
+                    return "Personal", round(confidence, 2), "ml_model_high_val"
+                
                 if confidence >= 0.3:
                     return pred_cat, round(confidence, 2), "ml_model"
                     
@@ -57,7 +60,7 @@ def categorize_all(db: Session, session_id: str):
     
     for txn in txns:
         if txn.category is None:
-            cat, conf, method = engine.categorize(txn.description, txn.type)
+            cat, conf, method = engine.categorize(txn.description, txn.type, txn.amount)
             txn.category = cat
             txn.category_confidence = conf
             txn.categorization_method = method

@@ -185,11 +185,11 @@ if st.session_state['session_id']:
         # Metric Cards
         col1, col2, col3, col4 = st.columns(4)
         with col1:
-            st.markdown(f"<div class='comic-panel'><div class='metric-title'>Total Income</div><div class='metric-value'>₹{summary['total_income']:,.2f}</div></div>", unsafe_allow_html=True)
+            st.markdown(f"<div class='comic-panel'><div class='metric-title'>Total Income</div><div class='metric-value'>₹{summary['total_income']:,.0f}</div></div>", unsafe_allow_html=True)
         with col2:
-            st.markdown(f"<div class='comic-panel'><div class='metric-title'>Total Expense</div><div class='metric-value'>₹{summary['total_expense']:,.2f}</div></div>", unsafe_allow_html=True)
+            st.markdown(f"<div class='comic-panel'><div class='metric-title'>Total Expense</div><div class='metric-value'>₹{summary['total_expense']:,.0f}</div></div>", unsafe_allow_html=True)
         with col3:
-            st.markdown(f"<div class='comic-panel'><div class='metric-title'>Net Savings</div><div class='metric-value'>₹{summary['net_savings']:,.2f}</div></div>", unsafe_allow_html=True)
+            st.markdown(f"<div class='comic-panel'><div class='metric-title'>Net Savings</div><div class='metric-value'>₹{summary['net_savings']:,.0f}</div></div>", unsafe_allow_html=True)
         with col4:
             savings_rate_str = "--" if summary['savings_rate'] < 0 else f"{summary['savings_rate']}%"
             st.markdown(f"<div class='comic-panel'><div class='metric-title'>Savings Rate</div><div class='metric-value'>{savings_rate_str}</div></div>", unsafe_allow_html=True)
@@ -269,7 +269,7 @@ if st.session_state['session_id']:
             )
             
             # Use Streamlit's native dataframe which will pick up font styles from config
-            st.dataframe(df_txns, use_container_width=True, height=600)
+            st.dataframe(df_txns.style.format({"amount": "{:,.0f}"}), use_container_width=True, height=600)
 
     with tab_insights:
         st.markdown("### Automated Ledger Insights")

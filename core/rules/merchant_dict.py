@@ -24,7 +24,8 @@ MERCHANT_CATEGORIES = {
     ],
     "Travel": [
         "makemytrip", "goibibo", "agoda", "cleartrip", "irctc", "flight",
-        "indigo", "spicejet", "vistara", "hotel", "airbnb", "yatra"
+        "indigo", "spicejet", "vistara", "hotel", "airbnb", "yatra",
+        "redbus", "abhibus", "ixigo"
     ],
     "local commute": [
         "uber", "ola", "rapido", "metro", "petrol", "fuel",
