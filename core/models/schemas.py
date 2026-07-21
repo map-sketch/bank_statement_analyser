@@ -39,11 +39,16 @@ class Insight(BaseModel):
     emoji: str
     text: str
 
+class DayWiseSpend(BaseModel):
+    day: str
+    average_amount: float
+
 class AnalyticsResponse(BaseModel):
     summary: Summary
     category_breakdown: List[CategoryBreakdownItem]
     avoidable_split: AvoidableSplit
     daily_spending: List[DailySpending]
+    day_wise_spend: List[DayWiseSpend]
     insights: List[Insight]
 
 class TransactionResponse(BaseModel):

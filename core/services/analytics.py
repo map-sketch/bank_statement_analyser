@@ -3,7 +3,7 @@ import pandas as pd
 from typing import List, Dict
 from sqlalchemy.orm import Session
 from core.models.db_models import TransactionModel, AnalyticsCacheModel
-from core.models.schemas import AnalyticsResponse, Summary, CategoryBreakdownItem, AvoidableSplit, DailySpending, Insight
+from core.models.schemas import AnalyticsResponse, Summary, CategoryBreakdownItem, AvoidableSplit, DailySpending, Insight, DayWiseSpend
 
 # Categories deemed avoidable by default
 AVOIDABLE_CATEGORIES = {"Food", "Entertainment", "Shopping", "Coffee", "Personal"}
@@ -93,7 +93,22 @@ def compute_analytics(db: Session, session_id: str):
             
     daily_spending = [DailySpending(date=d, amount=max(0, amt)) for d, amt in sorted(daily_totals.items()) if amt > 0]
 
-    # 4. Generate Breakdown
+    # 4. Compute Day-wise Average Spends (per transaction)
+    from collections import defaultdict
+    day_spend_totals = defaultdict(list)
+    for t in txns:
+        if t.type == "DEBIT" and not getattr(t, 'is_anomaly', False):
+            day_name = t.date.strftime("%A")
+            day_spend_totals[day_name].append(t.amount)
+            
+    day_wise_spend = []
+    days_order = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    for day in days_order:
+        amounts = day_spend_totals.get(day, [])
+        avg_amt = sum(amounts) / len(amounts) if amounts else 0.0
+        day_wise_spend.append(DayWiseSpend(day=day, average_amount=round(avg_amt, 2)))
+
+    # 5. Generate Breakdown
     breakdown = []
     for cat, net_amt in cat_net.items():
         if net_amt > 0:
@@ -134,6 +149,7 @@ def compute_analytics(db: Session, session_id: str):
         category_breakdown=breakdown,
         avoidable_split=AvoidableSplit(avoidable=avoidable_spend, unavoidable=unavoidable_spend),
         daily_spending=daily_spending,
+        day_wise_spend=day_wise_spend,
         insights=insights
     )
 

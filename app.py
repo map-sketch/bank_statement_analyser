@@ -241,17 +241,29 @@ if st.session_state['session_id']:
                 fig2.update_traces(line=dict(color='#1a1a1a', width=3))
                 st.plotly_chart(fig2, use_container_width=True)
 
-        st.markdown("### Avoidable vs Unavoidable Spending")
-        av_split = analytics["avoidable_split"]
-        av_df = pd.DataFrame({
-            "Type": ["Avoidable", "Unavoidable"],
-            "Amount": [av_split["avoidable"], av_split["unavoidable"]]
-        })
-        fig3 = px.bar(av_df, x="Amount", y="Type", color="Type", orientation='h',
-                      color_discrete_map={"Avoidable": "#ffdad6", "Unavoidable": "#98ff98"})
-        fig3.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font=dict(family="Literata", color='#1a1a1a'), showlegend=False)
-        fig3.update_traces(marker=dict(line=dict(color='#1a1a1a', width=2)))
-        st.plotly_chart(fig3, use_container_width=True)
+        col_chart3, col_chart4 = st.columns(2)
+        
+        with col_chart3:
+            st.markdown("### Avoidable vs Unavoidable Spending")
+            av_split = analytics["avoidable_split"]
+            av_df = pd.DataFrame({
+                "Type": ["Avoidable", "Unavoidable"],
+                "Amount": [av_split["avoidable"], av_split["unavoidable"]]
+            })
+            fig3 = px.bar(av_df, x="Amount", y="Type", color="Type", orientation='h',
+                          color_discrete_map={"Avoidable": "#ffdad6", "Unavoidable": "#98ff98"})
+            fig3.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font=dict(family="Literata", color='#1a1a1a'), showlegend=False)
+            fig3.update_traces(marker=dict(line=dict(color='#1a1a1a', width=2)))
+            st.plotly_chart(fig3, use_container_width=True)
+            
+        with col_chart4:
+            st.markdown("### Day-wise Average Spends")
+            day_wise_df = pd.DataFrame(analytics.get("day_wise_spend", []))
+            if not day_wise_df.empty:
+                fig4 = px.bar(day_wise_df, x='day', y='average_amount', color_discrete_sequence=['#ffdb58'])
+                fig4.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font=dict(family="Literata", color='#1a1a1a'))
+                fig4.update_traces(marker=dict(line=dict(color='#1a1a1a', width=2)))
+                st.plotly_chart(fig4, use_container_width=True)
 
     with tab_txns:
         st.markdown("### Detailed Transaction Ledger")
