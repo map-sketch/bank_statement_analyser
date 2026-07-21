@@ -83,10 +83,10 @@ def compute_analytics(db: Session, session_id: str):
             if avg_daily_spend > 0 and t.amount > (avg_daily_spend * 3):
                 t.is_anomaly = True
 
-    # Compute daily spending (excluding anomalies, and offsetting refunds)
+    # Compute daily spending (excluding anomalies, rent, and offsetting refunds)
     daily_totals = {}
     for t in txns:
-        if not getattr(t, 'is_anomaly', False) and cat_net[t.category] > 0:
+        if not getattr(t, 'is_anomaly', False) and cat_net[t.category] > 0 and t.category != "Rent":
             d_str = t.date.strftime("%Y-%m-%d")
             amt = t.amount if t.type == "DEBIT" else -t.amount
             daily_totals[d_str] = daily_totals.get(d_str, 0) + amt
